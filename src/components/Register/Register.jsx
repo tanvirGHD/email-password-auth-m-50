@@ -23,7 +23,7 @@ const Register = () => {
 
 
   return (
-    <div className="max-w-lg mx-auto">
+    <div className="max-w-lg mx-auto border p-7 rounded-lg shadow-lg">
       <h2 className="text-3xl my-5">Register</h2>
       <form 
         onSubmit={handleRegister}
@@ -38,7 +38,7 @@ const Register = () => {
             <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
             <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
           </svg>
-          <input type="email" className="grow" placeholder="Email" name="email" />
+          <input type="email" className="grow" placeholder="Email" name="email" required/>
         </label>
         <label className="input input-bordered flex items-center gap-2">
           <svg
@@ -53,9 +53,9 @@ const Register = () => {
               clipRule="evenodd"
             />
           </svg>
-          <input type="password" className="grow" placeholder="password" name="password"  />
+          <input type="password" className="grow" placeholder="password" name="password" required />
         </label>
-        <button className="btn btn-outline btn-wide btn-primary">Primary</button>
+        <button className="btn btn-outline w-full btn-primary">Primary</button>
       </form>
     </div>
   );
