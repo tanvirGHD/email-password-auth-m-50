@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 import { auth } from "../../firebase.init";
 import { useState } from "react";
 import { BsEyeSlashFill } from "react-icons/bs";
@@ -16,8 +16,10 @@ const SignUp = () => {
         event.preventDefault();
         const email = event.target.email.value;
         const password = event.target.password.value;
+        const name = event.target.name.value;
+        const photo = event.target.name.value;
         const terms = event.target.terms.checked;
-        console.log(email, password, terms);
+        console.log(email, password, name, photo, terms);
 
         //reset error and status
         setErrorMessage('')
@@ -43,12 +45,25 @@ const SignUp = () => {
             console.log(result.user);
             setSuccess(true);
 
-            //sent verification email address
-             sendEmailVerification(auth.currentUser)
-             .then(()=>{
-                console.log('verification email sent');
-             })
+        //sent verification email address
+        sendEmailVerification(auth.currentUser)
+            .then(()=>{
+            console.log('verification email sent');
+            })
+
+            // Update profile name and url
+            const profile = {
+                displayName: name,
+                photoURl: photo,
+            }
+            updateProfile(auth.currentUser, profile)
+            .then(() =>{
+                console.log('User Profile Update er');
+            })
+            .catch(error => console.log('User profile update error'))
         })
+
+
         .catch(error =>{
             console.log(error.message);
             setErrorMessage(error.message)
@@ -62,6 +77,30 @@ const SignUp = () => {
             <div className="card bg-base-100 w-full max-w-sm mx-auto shrink-0 shadow-2xl mt-10">
             <h2 className="text-3xl my-5 text-center font-bold">Sign Up!</h2>
             <form onSubmit={handleSignUp} className="card-body">
+                <div className="form-control">
+                <label className="label">
+                    <span className="label-text">Name</span>
+                </label>
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="User name"
+                    className="input input-bordered"
+                    required
+                />
+                </div>
+                <div className="form-control">
+                <label className="label">
+                    <span className="label-text">Photo URL</span>
+                </label>
+                <input
+                    type="text"
+                    name="photo"
+                    placeholder="photo url"
+                    className="input input-bordered"
+                    required
+                />
+                </div>
                 <div className="form-control">
                 <label className="label">
                     <span className="label-text">Email</span>
