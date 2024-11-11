@@ -1,8 +1,9 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth } from "../../firebase.init";
 import { useState } from "react";
 import { BsEyeSlashFill } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 
 
@@ -15,7 +16,7 @@ const SignUp = () => {
         event.preventDefault();
         const email = event.target.email.value;
         const password = event.target.password.value;
-        const terms = event.target.checked;
+        const terms = event.target.terms.checked;
         console.log(email, password, terms);
 
         //reset error and status
@@ -41,6 +42,12 @@ const SignUp = () => {
         .then(result =>{
             console.log(result.user);
             setSuccess(true);
+
+            //sent verification email address
+             sendEmailVerification(auth.currentUser)
+             .then(()=>{
+                console.log('verification email sent');
+             })
         })
         .catch(error =>{
             console.log(error.message);
@@ -106,6 +113,7 @@ const SignUp = () => {
                 <button className="btn btn-primary">Sign Up</button>
                 </div>
             </form>
+            <p className="py-5 text-center">Already have an account? Please <Link to='/login' className="font-bold"> Login </Link></p>
             {
                 errorMessage && <p className="text-red-700 text-lg p-5">{errorMessage}</p>
             }
